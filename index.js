@@ -25,6 +25,7 @@ server.on('request',(req,res)=>{
             const friend = data.toString();
             console.log('request:',friend);
             friends.push(JSON.parse(friend));
+            req.pipe(res);
         })
 
     }
