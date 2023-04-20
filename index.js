@@ -18,15 +18,23 @@ const friends =[
 ]
 
 server.on('request',(req,res)=>{
-    if(req.url === '/friends'){
+    const items = req.url.split('/');
+    // /friends/2  ['' , 'friends' , '2']
+    if(items[1] === 'friends'){
         
         // res.writeHead(200,{
         //     'Content-Type':'application/json',
         // });
         res.statusCode = 200;
         res.setHeader('Content-Type' , 'application/json');
-        res.end(JSON.stringify(friends));
-    }else if (req.url === '/messages'){
+        if(items.length === 3){
+            const friendsItem = Number(items[2])
+            res.end(JSON.stringify(friends[friendsItem]));
+        }else{
+            res.end(JSON.stringify(friends));
+        }
+
+    }else if (items[1] === 'messages'){
         res.statusCode = 200;
         res.setHeader('Content-Type' , 'text/html');
         res.write('<html>');
